@@ -85,6 +85,10 @@ const quotes = [
  * The fucntion returns a number 0 to the length of the quotes array minus 1.
 ***/
 const getRandomQuote = () => quotes[Math.floor(Math.random() * quotes.length)];
+
+/***
+ * randomColor() function returns a random RGB value
+ ***/
 const randomColor = function() {
   const red = Math.floor(Math.random() * 256);
   const blue = Math.floor(Math.random() * 256);
@@ -92,6 +96,11 @@ const randomColor = function() {
 
   return `rgb(${red}, ${blue}, ${green})`;
 }
+
+/***
+ * usedQuotes array created to store quote objects already used and to not repeat
+ * clearUsedQuotes() funciton cleares the usedQuotes array so it can keep iterating through the quotes array.
+ ***/
 let usedQuotes = [];
 const clearUsedQuotes = () => usedQuotes = []; 
 
@@ -99,32 +108,11 @@ const clearUsedQuotes = () => usedQuotes = [];
  *  Created printQuote() function.
 ***/
 
-// function printQuote() {
-//   const quoteObj = getRandomQuote();
-//   let html = `
-//   <p class="quote">${quoteObj.quote}</p>
-//   <p class="source">${quoteObj.source}
-//   `;
-  
-//   // The conditional statement checks if citation property and year property are undefined.
-//   if (quoteObj.citation && quoteObj.year) {
-//     html += `
-//     <span class="citation">${quoteObj.citation}</span>
-//     <span class="year">${quoteObj.year}</span>
-//     `;
-//   } else if (quoteObj.citation) {
-//     html += `<span class="citation">${quoteObj.citation}</span>`;
-//   } else if (quoteObj.year) {
-//     html += `<span class="year">${quoteObj.year}</span>`;
-//   }
-//   html += `</p>`;
-  
-//   return document.getElementById('quote-box').innerHTML = html;
-// } 
-
 function printQuote() {
   let quoteObj = getRandomQuote();
   let html = ``;
+  
+  // While loop checks if current quote was already used to replace it if necessary.
   while (usedQuotes.includes(quoteObj)) {
     quoteObj = getRandomQuote();
     if (usedQuotes.length === quotes.length) {
@@ -132,18 +120,22 @@ function printQuote() {
     }
   }
   usedQuotes.push(quoteObj);
-  for (let property in quoteObj) {
-    if (property === 'quote') {
-      html += `<p class="quote">${quoteObj[property]}</p>`;
-    } else if (property === 'source') {
-      html += `<p class="source">${quoteObj[property]}`;
-    } else if (property === 'citation') {
-      html += `<span class="citation">${quoteObj[property]}</span>`;
-    } else if (property === 'year') {
-      html += `<span class="year">${quoteObj[property]}</span>`;
-    } else if (property === 'category') {
-      html += `<span class="year"> (<i>${quoteObj[property]}</i>) </span>`;
-    }
+  
+  // The following conditional statements check to see if it has properties to print to the page.
+  if (quoteObj.quote) {
+    html += `<p class="quote">${quoteObj.quote}</p>`;
+  }
+  if (quoteObj.source) {
+    html += `<p class="source">${quoteObj.source}`;
+  }
+  if (quoteObj.citation) {
+    html += `<span class="citation">${quoteObj.citation}</span>`;
+  }
+  if (quoteObj.year) {
+    html += `<span class="year">${quoteObj.year}</span>`;
+  }
+  if (quoteObj.category) {
+    html += `<span class="year"> (<i>${quoteObj.category}</i>) </span>`;
   }
   html += `</p>`;
 
@@ -155,6 +147,7 @@ function printQuote() {
 /***
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
+ * Interval set at 10 secs.
 ***/
 window.setInterval(printQuote, 10000);
 document.getElementById('load-quote').addEventListener("click", printQuote, false);

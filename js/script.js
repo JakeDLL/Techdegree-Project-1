@@ -6,8 +6,11 @@ project 1 - A Random Quote Generator
 // For assistance: 
   // Check the "Project Resources" section of the project instructions
   // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
+/*
+  I am going for the "Exceeds Expectations" grade. Thank you for your time.
+ */
 
-/*** 
+  /*** 
  * Created a quotes array. 
 ***/
 const quotes = [

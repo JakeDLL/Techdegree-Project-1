@@ -79,7 +79,7 @@ const quotes = [
 const getRandomQuote = () => quotes[Math.floor(Math.random() * quotes.length)];
 
 /***
- * 
+ *  Created printQuote() function.
 ***/
 function printQuote() {
   const quoteObj = getRandomQuote();
@@ -87,6 +87,7 @@ function printQuote() {
   <p class="quote">${quoteObj.quote}</p>
   <p class="source">${quoteObj.source}
   `;
+  // The conditional statement checks if citation property and year property are undefined.
   if (quoteObj.citation && quoteObj.year) {
     html += `
     <span class="citation">${quoteObj.citation}</span>

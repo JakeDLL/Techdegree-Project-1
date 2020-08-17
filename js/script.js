@@ -15,19 +15,22 @@ const quotes = [
     quote: `I know very little about anything, but I do know this: That if you can live your lfe without an audience, you should do it.`,
     source: `Bo Burnham`,
     citation: 'Make Happy',
-    year: 2016
+    year: 2016,
+    category: 'Life'
   },
   {
     quote: `A kiss may ruin a human life.`,
     source: `Oscar Wilde`,
     citation: `A Woman of No Importance, Mrs. Arbuthnot, Act 4`,
-    year: 1893
+    year: 1893,
+    category: 'Love'
   },
   {
     quote: `Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.`,
     source: `Martin Luther King, Jr.`,
     citation: `Strength to Love`,
-    year: 1963
+    year: 1963,
+    category: 'Love'
   },
   {
     quote: `Wild men who caught and sang the sun in flight, And learn, too late, they grieved it on its way, Do not go gentle into that good night.`,
@@ -39,7 +42,8 @@ const quotes = [
     quote: `We walk alone in the world. Friends, such as we desire, are dreams and fables.`,
     source: `Ralph Waldo Emerson`,
     citation: `Essays, First Series`,
-    year: 1841
+    year: 1841,
+    category: 'Friends'
   },
   {
     quote: `Wickedness is always easier than virtue; for it takes the short cut to everything.`,
@@ -51,13 +55,15 @@ const quotes = [
     quote: `There must be something in books, things we can't imagine, to make a woman stay in a burning house; there must be something there. You don't stay for nothing.`,
     source: `Ray Bradbury`,
     citation: `Fahrenheit 451, Guy Montag`,
-    year: 1953
+    year: 1953,
+    category: 'Books'
   },
   {
     quote: `Time is an illusion. Lunchtime doubly so.`,
     source: `Douglas Adams`,
     citation: `The Hitchhiker's Guide to the Galaxy, Ford Prefect`,
-    year: 1978
+    year: 1978,
+    category: 'Funny'
   },
   {
     quote: `Knowing where you came from is no less important than knowing where you are going.`,
@@ -69,36 +75,80 @@ const quotes = [
     quote: `I try all things, I achieve what I can.`,
     source: `Herman Melville`,
     citation: `Moby Dick, Ishmael`,
-    year: 1851
+    year: 1851,
+    category: 'Inspirational'
   }
 ];
 
 /***
  * Created the getRandomQuote() function as an arrow function expression since it is just being used as data.
+ * The fucntion returns a number 0 to the length of the quotes array minus 1.
 ***/
 const getRandomQuote = () => quotes[Math.floor(Math.random() * quotes.length)];
+const randomColor = function() {
+  const red = Math.floor(Math.random() * 256);
+  const blue = Math.floor(Math.random() * 256);
+  const green = Math.floor(Math.random() * 256);
+
+  return `rgb(${red}, ${blue}, ${green})`;
+}
+let usedQuotes = [];
+const clearUsedQuotes = () => usedQuotes = []; 
 
 /***
  *  Created printQuote() function.
 ***/
+
+// function printQuote() {
+//   const quoteObj = getRandomQuote();
+//   let html = `
+//   <p class="quote">${quoteObj.quote}</p>
+//   <p class="source">${quoteObj.source}
+//   `;
+  
+//   // The conditional statement checks if citation property and year property are undefined.
+//   if (quoteObj.citation && quoteObj.year) {
+//     html += `
+//     <span class="citation">${quoteObj.citation}</span>
+//     <span class="year">${quoteObj.year}</span>
+//     `;
+//   } else if (quoteObj.citation) {
+//     html += `<span class="citation">${quoteObj.citation}</span>`;
+//   } else if (quoteObj.year) {
+//     html += `<span class="year">${quoteObj.year}</span>`;
+//   }
+//   html += `</p>`;
+  
+//   return document.getElementById('quote-box').innerHTML = html;
+// } 
+
 function printQuote() {
-  const quoteObj = getRandomQuote();
-  let html = `
-  <p class="quote">${quoteObj.quote}</p>
-  <p class="source">${quoteObj.source}
-  `;
-  // The conditional statement checks if citation property and year property are undefined.
-  if (quoteObj.citation && quoteObj.year) {
-    html += `
-    <span class="citation">${quoteObj.citation}</span>
-    <span class="year">${quoteObj.year}</span>
-    `;
-  } else if (quoteObj.citation) {
-    html += `<span class="citation">${quoteObj.citation}</span>`;
-  } else if (quoteObj.year) {
-    html += `<span class="year">${quoteObj.year}</span>`;
+  let quoteObj = getRandomQuote();
+  let html = ``;
+  while (usedQuotes.includes(quoteObj)) {
+    quoteObj = getRandomQuote();
+    if (usedQuotes.length === quotes.length) {
+      clearUsedQuotes();
+    }
+  }
+  usedQuotes.push(quoteObj);
+  for (let property in quoteObj) {
+    if (property === 'quote') {
+      html += `<p class="quote">${quoteObj[property]}</p>`;
+    } else if (property === 'source') {
+      html += `<p class="source">${quoteObj[property]}`;
+    } else if (property === 'citation') {
+      html += `<span class="citation">${quoteObj[property]}</span>`;
+    } else if (property === 'year') {
+      html += `<span class="year">${quoteObj[property]}</span>`;
+    } else if (property === 'category') {
+      html += `<span class="year"> (<i>${quoteObj[property]}</i>) </span>`;
+    }
   }
   html += `</p>`;
+
+  document.querySelector('body').style.backgroundColor = randomColor();
+  
   return document.getElementById('quote-box').innerHTML = html;
 } 
 
@@ -106,5 +156,5 @@ function printQuote() {
  * click event listener for the print quote button
  * DO NOT CHANGE THE CODE BELOW!!
 ***/
-
+window.setInterval(printQuote, 10000);
 document.getElementById('load-quote').addEventListener("click", printQuote, false);

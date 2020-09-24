@@ -15,7 +15,7 @@ project 1 - A Random Quote Generator
 ***/
 const quotes = [
   {
-    quote: `I know very little about anything, but I do know this: That if you can live your lfe without an audience, you should do it.`,
+    quote: `I know very little about anything, but I do know this: That if you can live your life without an audience, you should do it.`,
     source: `Bo Burnham`,
     citation: 'Make Happy',
     year: 2016,
@@ -116,13 +116,14 @@ function printQuote() {
   let html = ``;
   
   // While loop checks if current quote was already used to replace it if necessary.
-  while (usedQuotes.includes(quoteObj)) {
+  while (usedQuotes.includes(quoteObj.quote)) {
     quoteObj = getRandomQuote();
+
     if (usedQuotes.length === quotes.length) {
       clearUsedQuotes();
     }
   }
-  usedQuotes.push(quoteObj);
+  usedQuotes.push(quoteObj.quote);
   
   // The following conditional statements check to see if it has properties to print to the page.
   if (quoteObj.quote) {

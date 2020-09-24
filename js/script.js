@@ -92,7 +92,7 @@ const getRandomQuote = () => quotes[Math.floor(Math.random() * quotes.length)];
 /***
  * randomColor() function returns a random RGB value
  ***/
-const randomColor = function() {
+const randomColor = () => {
   const red = Math.floor(Math.random() * 256);
   const blue = Math.floor(Math.random() * 256);
   const green = Math.floor(Math.random() * 256);
